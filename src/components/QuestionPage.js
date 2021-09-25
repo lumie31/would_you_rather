@@ -5,6 +5,9 @@ import { connect } from 'react-redux';
 import Nav from './Nav';
 import LoginRedirect from './LoginRedirect';
 import Option from './Option';
+import Button from "@material-ui/core/Button";
+import { Link } from 'react-router-dom';
+
 // Action Creators
 import { handleAnswer } from '../actions/shared';
 // Utils
@@ -42,41 +45,60 @@ class QuestionPage extends Component {
     const optionTwoPerc = getPercentVotes(optionTwoVotes, totalVotes);
 
     return (
-      <div className='question-page'>
+      <div className="question-page">
         <Nav />
-        <img className='big-avatar' alt='big avatar' src={require('../assets/' + authorAvatar)}/>
-        <span className='author-prompt'>{authorName} asks</span>
+        <div className="back">
+          <Button
+            className="back-btn"
+            variant='contained'
+            color='secondary'
+            component={Link}
+            to={'/home'}
+          >
+            Go Back
+          </Button>
+        </div>
+        <img
+          className="big-avatar"
+          alt="big avatar"
+          src={require("../assets/" + authorAvatar)}
+        />
+        <span className="author-prompt">{authorName} asks</span>
         <h2>Would you rather ...</h2>
-
-        {
-          hasAnswered && <div>
+        {hasAnswered && (
+          <div>
             <Option
-              chosen={answer === 'optionOne'}
+              chosen={answer === "optionOne"}
               optionText={optionOne}
               optionPerc={optionOnePerc}
               optionVotes={optionOneVotes}
               totalVotes={totalVotes}
             />
             <Option
-              chosen={answer === 'optionTwo'}
+              chosen={answer === "optionTwo"}
               optionText={optionTwo}
               optionPerc={optionTwoPerc}
               optionVotes={optionTwoVotes}
               totalVotes={totalVotes}
             />
           </div>
-        }
-
-        {
-          !(hasAnswered) && <div>
-            <div className='option-open' onClick={() => this.handleClick('optionOne')}>
+        )}
+        {!hasAnswered && (
+          <div>
+            <div
+              className="option-open"
+              onClick={() => this.handleClick("optionOne")}
+            >
               {optionOne}?
             </div>
-            <div className='option-open' onClick={() => this.handleClick('optionTwo')}>
+            <div
+              className="option-open"
+              onClick={() => this.handleClick("optionTwo")}
+            >
               {optionTwo}?
             </div>
           </div>
-        }
+        )}
       </div>
     );
   }
